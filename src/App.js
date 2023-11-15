@@ -107,7 +107,7 @@ class App extends React.Component {
     try {
       await contract.methods.addFunds().send({
         from: this.state.account,
-        value: this.state.web3.utils.toWei("1", "ether")
+        value: this.state.web3.utils.toWei("0.2", "ether")
       });
       console.log("Funds added successfully.");
     } catch (error) {
@@ -122,9 +122,10 @@ class App extends React.Component {
   withdrawFunds = async () => {
     const contract = new this.state.web3.eth.Contract(faucetContract.abi, this.state.contract.address);
     const withdrawAmount = this.state.web3.utils.toWei("0.1", "ether");
-    await contract.methods.withdraw(withdrawAmount).send({
+    const data = await contract.methods.withdraw(withdrawAmount).send({
       from: this.state.account
     })
+    console.log(data);
     this.loadProvider();
   }
   
